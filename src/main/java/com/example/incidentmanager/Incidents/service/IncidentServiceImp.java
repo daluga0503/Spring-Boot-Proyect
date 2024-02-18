@@ -1,22 +1,34 @@
 package com.example.incidentmanager.Incidents.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import com.example.incidentmanager.Incidents.domain.IncidentDto;
 import com.example.incidentmanager.Incidents.domain.IncidentEntity;
 import com.example.incidentmanager.Incidents.domain.IncidentRepository;
+import com.example.incidentmanager.User.domain.UserEntity;
+import com.example.incidentmanager.User.domain.UserRepository;
 
 @Service
 public class IncidentServiceImp implements IncidentService {
 
     private IncidentRepository repository;
+    private UserRepository userRepository;
 
-    public IncidentServiceImp(IncidentRepository repository){
+    public IncidentServiceImp(IncidentRepository repository, UserRepository userRepository){
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public IncidentEntity createIncident(IncidentEntity incident) {
-        return this.repository.save(incident);
+    public IncidentEntity createIncident(IncidentDto incident) {
+        //int userId = incident.getUserId();
+        int userId = 302; // tener cuidado
+        UserEntity user = this.userRepository.findById(userId).orElseThrow() ;
+        IncidentEntity newIncident = new IncidentEntity();
+        BeanUtils.copyProperties(incident, newIncident, "USER_ID");
+        newIncident.setUser(user);
+        return this.repository.save(newIncident);
     }
 
     @Override

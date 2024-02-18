@@ -1,10 +1,11 @@
 package com.example.incidentmanager.Incidents.service;
 
+import com.example.incidentmanager.Incidents.domain.IncidentDto;
 import com.example.incidentmanager.Incidents.domain.IncidentEntity;
 
 public interface IncidentService {
 
-    public IncidentEntity createIncident(IncidentEntity incident);
+    public IncidentEntity createIncident(IncidentDto incident);
 
     public Iterable<IncidentEntity> getAll();
 

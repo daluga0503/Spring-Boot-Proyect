@@ -90,6 +90,5 @@ public class UserServiceImpl implements UserService {
         oldUser.setCourse(oldUser.getCourse());
 
         return repository.save(oldUser);
-    }
-    
+    }   
 }

@@ -2,10 +2,9 @@ package com.example.incidentmanager.Incidents.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.support.MultipartFilter;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.incidentmanager.Incidents.core.IncidentAlreadyExistException;
+import com.example.incidentmanager.Incidents.domain.IncidentDto;
 import com.example.incidentmanager.Incidents.domain.IncidentEntity;
 import com.example.incidentmanager.Incidents.service.IncidentService;
 
@@ -42,7 +41,7 @@ public class IncidentController {
     }
 
     @PostMapping(path = "api/incidents", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public IncidentEntity createIncident(@RequestPart("incident") IncidentEntity incident,
+    public IncidentEntity createIncident(@RequestPart("incident") IncidentDto incident,
                                         @RequestParam("image") MultipartFile image) {
         
         try {

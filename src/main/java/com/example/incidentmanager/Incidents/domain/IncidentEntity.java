@@ -1,11 +1,17 @@
 package com.example.incidentmanager.Incidents.domain;
 
+
+import com.example.incidentmanager.User.domain.UserEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,18 +25,22 @@ public class IncidentEntity {
     @Column(columnDefinition = "LONGBLOB")
     byte[] image;
     String imageType;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    UserEntity user;
 
     public IncidentEntity(){
-        
+
     }
 
 
     
-    public IncidentEntity(int id, String title, byte[] image, String imageType) {
+    public IncidentEntity(int id, String title, byte[] image, String imageType, UserEntity user) {
         this.id = id;
         this.title = title;
         this.image = image;
         this.imageType = imageType;
+        this.user = user;
     }
     public int getId() {
         return id;
@@ -55,5 +65,11 @@ public class IncidentEntity {
     }
     public void setImageType(String imageType) {
         this.imageType = imageType;
+    }
+    public UserEntity getUser() {
+        return user;
+    }
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }
