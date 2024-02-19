@@ -5,14 +5,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.example.incidentmanager.User.domain.UserEntity;
-import com.example.incidentmanager.User.service.UserService;
+import com.example.incidentmanager.User.security.adapter.SecurityController;
 
 @SpringBootApplication
 public class IncidentManagerApplication implements CommandLineRunner{
-	private final UserService service;
+	private final SecurityController controller;
 
-	public IncidentManagerApplication(UserService service){
-		this.service = service;
+	public IncidentManagerApplication(SecurityController controller){
+		this.controller = controller;
 	}
 
 	public static void main(String[] args) {
@@ -23,7 +23,7 @@ public class IncidentManagerApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		UserEntity admin = new UserEntity(0, "Daniel", "Luga", "daniel@gmail.com", "2ºDam", "ADMIN", "123456");
 		try {
-			this.service.create(admin);
+			this.controller.registerUser(admin);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
