@@ -19,11 +19,24 @@ public class DefaultSecurityConfig {
     public DefaultSecurityConfig(){
         this.encoder = new BCryptPasswordEncoder();
     }
+    /* 
     @Bean
     public SecurityFilterChain routesFilter(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests(
             (requests) -> requests.requestMatchers(HttpMethod.POST, "/register").permitAll()
                                     .requestMatchers("/csrf").permitAll()
+                                    .anyRequest().authenticated()
+        ).httpBasic(Customizer.withDefaults());
+        return http.build();
+    }
+    */
+
+    @Bean
+    public SecurityFilterChain routesFilter(HttpSecurity http) throws Exception{
+        http.authorizeHttpRequests(
+            (requests) -> requests.requestMatchers(HttpMethod.POST, "/register").permitAll()
+                                    .requestMatchers("/csrf").permitAll()
+                                    .requestMatchers("/login").authenticated()
                                     .anyRequest().authenticated()
         ).httpBasic(Customizer.withDefaults());
         return http.build();

@@ -2,6 +2,7 @@ package com.example.incidentmanager.User.service;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,14 +41,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void login(String email, String password) {
-        for (UserEntity user : users) {
-            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
+    public UserEntity login(String email, String password, PasswordEncoder encoder) {
+        UserEntity user = repository.findByEmailIgnoreCase(email);
+
+        try {
+            if (user != null && encoder.matches(password, user.getPassword())) {
                 userLogin = user;
-                System.out.println("Inicio de sesión:" + user.getEmail());
             }
+        } catch (Exception e) {
+            return null;
         }
-        System.out.println("Inicio de sesión no exitoso");
+        return user;
     }
 
     @Override

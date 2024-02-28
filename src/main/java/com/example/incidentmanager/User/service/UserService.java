@@ -1,6 +1,8 @@
 package com.example.incidentmanager.User.service;
 
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.example.incidentmanager.User.domain.UserEntity;
 
 
@@ -17,7 +19,7 @@ public interface UserService {
 
     public void register(UserEntity user);
 
-    public void login(String email, String password);
+    public UserEntity login(String email, String password, PasswordEncoder encoder);
 
     public boolean userExists(String email);
 

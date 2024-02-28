@@ -20,9 +20,7 @@ public class CustomUserDetailService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-        UserEntity userEntity = this.repository.findByEmailIgnoreCase(username).orElseThrow(
-            () -> new UsernameNotFoundException(username)
-        );
+        UserEntity userEntity = this.repository.findByEmailIgnoreCase(username);
         UserDetails userDetails = User.builder()
                                 .username(userEntity.getEmail())
                                 .password(userEntity.getPassword())
